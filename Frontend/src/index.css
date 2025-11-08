@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Deep space black background */
+    --background: 240 10% 4%;
+    --foreground: 210 100% 95%;
+
+    /* Card with slight elevation */
+    --card: 240 8% 8%;
+    --card-foreground: 210 100% 95%;
+
+    /* Popovers */
+    --popover: 240 8% 10%;
+    --popover-foreground: 210 100% 95%;
+
+    /* Electric cyan primary */
+    --primary: 187 100% 50%;
+    --primary-foreground: 240 10% 4%;
+
+    /* Neon purple accent */
+    --secondary: 280 100% 60%;
+    --secondary-foreground: 240 10% 4%;
+
+    /* Muted dark tones */
+    --muted: 240 8% 15%;
+    --muted-foreground: 210 20% 60%;
+
+    /* Accent with purple tint */
+    --accent: 280 100% 60%;
+    --accent-foreground: 240 10% 4%;
+
+    /* Destructive red */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 100% 95%;
+
+    /* Borders and inputs */
+    --border: 240 10% 20%;
+    --input: 240 10% 20%;
+    --ring: 187 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-neon: linear-gradient(135deg, hsl(280, 100%, 60%), hsl(187, 100%, 50%));
+    --gradient-glow: linear-gradient(180deg, hsl(280, 100%, 60% / 0.15), hsl(187, 100%, 50% / 0.15));
+    
+    /* Glow effects */
+    --glow-purple: 0 0 40px hsl(280, 100%, 60% / 0.4), 0 0 80px hsl(280, 100%, 60% / 0.2);
+    --glow-cyan: 0 0 40px hsl(187, 100%, 50% / 0.4), 0 0 80px hsl(187, 100%, 50% / 0.2);
+    --glow-mixed: 0 0 60px hsl(280, 100%, 60% / 0.3), 0 0 100px hsl(187, 100%, 50% / 0.3);
+
+    /* Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, hsl(var(--primary)), hsl(var(--secondary)));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, hsl(var(--secondary)), hsl(var(--primary)));
+  }
+}
+
+@layer utilities {
+  .glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .glow-mixed {
+    box-shadow: var(--glow-mixed);
+  }
+
+  .gradient-neon {
+    background: var(--gradient-neon);
+  }
+
+  .gradient-glow {
+    background: var(--gradient-glow);
+  }
+
+  .text-gradient {
+    background: var(--gradient-neon);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: hsl(var(--card) / 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.3);
+  }
+}
+
+/* Parallax Component Styles */
+.parallax {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.parallax__header {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parallax__visuals {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.parallax__black-line-overflow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 2;
+}
+
+.parallax__layers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parallax__layer-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.parallax__layer-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+}
+
+.parallax__title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.parallax__fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 4;
+}
+
+.parallax__content {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--background));
+  padding: 2rem;
+}
+
+.osmo-icon-svg {
+  width: 160px;
+  height: 160px;
+  color: hsl(var(--primary));
+}
+
+.osmo-credits {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.osmo-credits__p {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  margin: 0;
+}
+
+.osmo-credits__p-a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+.osmo-credits__p-a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .parallax__title {
+    font-size: 2.5rem;
+  }
+  
+  .osmo-icon-svg {
+    width: 120px;
+    height: 120px;
+  }
+}
