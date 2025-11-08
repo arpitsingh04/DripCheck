@@ -22,11 +22,11 @@ const ProductCard = ({ product, index, onQuickView }: ProductCardProps) => {
       transition={{ delay: index * 0.1, duration: 0.5 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="group relative"
+      className="group relative h-full flex flex-col"
     >
-      <div className="relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-300 group-hover:border-primary/50">
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden">
+      <div className="relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-300 group-hover:border-primary/50 h-full flex flex-col">
+        {/* Image Container - Larger on mobile */}
+        <div className="relative aspect-[4/5] sm:aspect-square overflow-hidden flex-shrink-0">
           <motion.img
             src={product.image}
             alt={product.name}
@@ -44,44 +44,45 @@ const ProductCard = ({ product, index, onQuickView }: ProductCardProps) => {
             className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
           />
 
-          {/* Quick Actions */}
+          {/* Quick Actions - Hidden on mobile, shown on hover for desktop */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-x-0 bottom-0 p-4 flex gap-2"
+            className="absolute inset-x-0 bottom-0 p-2 sm:p-4 gap-2 hidden sm:flex"
           >
             <Button
               size="sm"
               variant="default"
-              className="flex-1 bg-gradient-neon hover:opacity-90 border-0"
+              className="flex-1 bg-gradient-neon hover:opacity-90 border-0 text-xs"
               onClick={() => {
                 addToCart(product);
               }}
             >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Add to Cart
+              <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+              <span className="hidden md:inline">Add to Cart</span>
+              <span className="md:hidden">Add</span>
             </Button>
             <Button
               size="sm"
               variant="outline"
-              className="px-3"
+              className="px-2 sm:px-3"
               onClick={() => onQuickView(product)}
             >
-              <Eye className="w-4 h-4" />
+              <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
           </motion.div>
         </div>
 
-        {/* Product Info */}
-        <div className="p-4">
-          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+        {/* Product Info - Reduced padding and text size on mobile */}
+        <div className="p-2 sm:p-4 flex flex-col flex-grow">
+          <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider mb-0.5 sm:mb-1">
             {product.category}
           </p>
-          <h3 className="font-semibold text-foreground mb-2 group-hover:text-gradient transition-all">
+          <h3 className="text-xs sm:text-sm md:text-base font-semibold text-foreground mb-1 sm:mb-2 group-hover:text-gradient transition-all line-clamp-2 flex-grow">
             {product.name}
           </h3>
-          <p className="text-lg font-bold text-primary">
+          <p className="text-sm sm:text-base md:text-lg font-bold text-primary mt-auto">
             ${product.price.toFixed(2)}
           </p>
         </div>
